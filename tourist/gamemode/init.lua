@@ -18,6 +18,7 @@ include("shared.lua")
 include("faction_setup.lua")  
 include("vgui/cl_faction_selection.lua")
 include("vgui/cl_popup.lua")
+include("autorun/server/sv_popup.lua")
 
 -- Similar functionality as team.GetName(ply:Team()), only difference is taking the team index 
 function getFactionName(ply) 
@@ -32,13 +33,19 @@ function getFactionName(ply)
 end
 
 function GM:PlayerSpawn(ply)
-
     if ply:IsConnected() then
+        --ply:ChatPrint(ply:SendTimeConnect())
         GAMEMODE:PlayerSpawnAsSpectator(ply)
     end
 
     local indx, _ = getFactionName(ply)
     
+    if indx ~= "Spectator" then
+        function self:AllowPlayerPickup(ply)
+            return true
+        end
+    end
+
     if indx == 0 then
         chosenIndependent()
     elseif indx == 1 then
@@ -48,6 +55,9 @@ function GM:PlayerSpawn(ply)
     elseif indx == 3 then
         chosenZombies()
     elseif indx == "Spectator" then
+        function self:AllowPlayerPickup(ply)
+            return false
+        end
         -- MAKE IT WHERE THE SPECTATOR CANNOT CONTROL WORLD ENTITIES
     end
 
@@ -81,4 +91,11 @@ function GM:PlayerInitialSpawn(ply)
         ply:setupTeam(math.random(0, 3))
         ply:ChatPrint(ply:IPAddress() .. ": " .. ply:Name() .. " connected.")
     end
+end
+
+util.AddNetworkString("faction_menu")
+
+function GM:ShowSpare2(ply)
+    net.Start("faction_menu")
+    net.Send(ply)
 end

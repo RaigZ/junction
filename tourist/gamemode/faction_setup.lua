@@ -1,11 +1,12 @@
 --[[
+    
     ADDONS USED AND CREDITS: 
         PARAKEET'S PILL PACK ADDON -->  https://steamcommunity.com/sharedfiles/filedetails/?id=950845673
 
 
     Gamemode: Tourist
     Author: Ace Lord 
-    Steam ID: 76561198129715226
+    STEAM_ID:76561198129715226
     January 7, 2023
 
 --]]
@@ -49,6 +50,22 @@ teams[3] = {
     color = Vector(1.0, 0, 0),
     weapons = {} 
 }
+
+---------------------------------------------------------
+--[[
+
+    AUTHOR: Ace_Lord
+    STEAM_ID:76561198129715226
+    DATE: January 7, 2023
+
+    DESCRIPTION: Chooses specific factions with specific 
+    units associated with factions.
+    
+    RETURNS: randomUnit 
+    
+    ;a string model name
+--]]
+---------------------------------------------------------
 
 function chosenIndependent() 
     randomIndependentUnitArg = {
@@ -96,6 +113,19 @@ function chosenZombies()
     RunConsoleCommand("pk_pill_apply", randomUnit)
     return randomUnit
 end
+
+---------------------------------------------------------
+--[[
+
+    AUTHOR: Ace_Lord
+    STEAM_ID:76561198129715226
+    DATE: January 7, 2023
+
+    DESCRIPTION: Template team setup; team transition 
+    phases that collects model name of unique units. 
+    
+--]]
+---------------------------------------------------------
 
 function ply:setupTeam(teamValue)
     if (not teams[teamValue]) then 

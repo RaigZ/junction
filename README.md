@@ -1,2 +1,30 @@
-# tourist
-Team-based gamemode for Garry's Mod
+A currently working in developement environment for me to understand Lua, also to 
+establish this new gamemode in Garry's Mod. I am not quite sure what this gamemode 
+will be about, but it seems that I am getting the basic understanding into how to 
+implement objects and tables in Lua.
+
+How to play:
+
+The player is chosen one of the four factions.
+Depending on the faction, points will progress
+as the player frags other PLAYERS. While in the
+process of fragging other players, there is the
+obstacle of NPCs trying to attack you which do
+NOT progress points. If the points meet the
+threshold, shall the game end.
+
+Special Units:
+
+Special units are those who are special to the 
+faction. 
+
+For example, Gordon Freeman is a special
+unit to the Resistance faction. 
+
+Breen is special to the Combine faction. 
+
+Independent has the GMan who is OP for unexplainable reasons, 
+but the GMan must attend other matters of searching for 
+more employers once the timer of his mayhem ends. 
+
+Zombies harbor multiple units of their own...

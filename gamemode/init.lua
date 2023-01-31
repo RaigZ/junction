@@ -12,11 +12,11 @@ AddCSLuaFile("shared.lua")
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("faction_setup.lua")
 AddCSLuaFile("vgui/cl_popup.lua")
-AddCSLuaFile("vgui/cl_faction_selection.lua")
+AddCSLuaFile("autorun/client/cl_faction_selection.lua")
 
 include("shared.lua")
 include("faction_setup.lua")  
-include("vgui/cl_faction_selection.lua")
+include("autorun/client/cl_faction_selection.lua")
 include("vgui/cl_popup.lua")
 include("autorun/server/sv_popup.lua")
 
@@ -44,6 +44,10 @@ function GM:PlayerSpawn(ply)
         function self:AllowPlayerPickup(ply)
             return true
         end
+    else
+        function self:AllowPlayerPickup(ply)
+            return false
+        end
     end
 
     if indx == 0 then
@@ -55,9 +59,6 @@ function GM:PlayerSpawn(ply)
     elseif indx == 3 then
         chosenZombies()
     elseif indx == "Spectator" then
-        function self:AllowPlayerPickup(ply)
-            return false
-        end
         -- MAKE IT WHERE THE SPECTATOR CANNOT CONTROL WORLD ENTITIES
     end
 

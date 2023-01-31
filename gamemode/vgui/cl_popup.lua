@@ -37,7 +37,7 @@ if CLIENT then
     txt:SetPos(10, 80)
     txt:SetFont("HudHintTextLarge")
     txt:SetColor(Color(255, 243, 34))
-    txt:SetText("CREATOR: Ace Lord\nWelcome to Tourist.\nIm not good with version \nsemantics; \n\nVERSION: ALPHA_0.5.1")
+    txt:SetText("CREATOR: RaigZ\nWelcome to Tourist.\nIm not good with version \nsemantics; \n\nVERSION: ALPHA_0.6.1")
     txt:SetHeight(200)
     txt:SetWidth(200)
 end

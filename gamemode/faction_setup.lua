@@ -21,7 +21,7 @@ teams[0] = {
     frags = 0,
     special_unit = {}, -- the_GMan
     color = Vector(1.0, 1.0, 1.0),
-    weapons = {} 
+    --weapons = {} 
 }
 
 --Resistance...
@@ -30,7 +30,7 @@ teams[1] = {
     frags = 0,
     special_unit = {}, -- Gordon, Barney, Alyx, Eli
     color = Vector(0, 0, 1.0),
-    weapons = {} 
+    --weapons = {} 
 }
 
 --Combine...
@@ -39,7 +39,7 @@ teams[2] = {
     frags = 0,
     special_unit = {}, -- Breen 
     color = Vector(1.0, 0, 0),
-    weapons = {} 
+    --weapons = {} 
 }
 
 --Zombies... 
@@ -48,12 +48,11 @@ teams[3] = {
     frags = 0,
     special_unit = {}, -- Poison Zombie!?
     color = Vector(1.0, 0, 0),
-    weapons = {} 
+    --weapons = {} 
 }
 
 ---------------------------------------------------------
 --[[
-
     AUTHOR: Ace_Lord
     STEAM_ID:76561198129715226
     DATE: January 7, 2023
@@ -116,14 +115,12 @@ end
 
 ---------------------------------------------------------
 --[[
-
     AUTHOR: Ace_Lord
     STEAM_ID:76561198129715226
     DATE: January 7, 2023
 
     DESCRIPTION: Template team setup; team transition 
     phases that collects model name of unique units. 
-    
 --]]
 ---------------------------------------------------------
 

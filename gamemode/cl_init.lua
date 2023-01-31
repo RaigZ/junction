@@ -10,4 +10,4 @@
 
 include("shared.lua")
 include("vgui/cl_popup.lua")
-include("vgui/cl_faction_selection.lua")
+include("autorun/client/cl_faction_selection.lua")

@@ -10,6 +10,9 @@
 
 --print("cl_faction_selection.lua")
 
+
+include("tourist/gamemode/faction_setup.lua")
+
 if CLIENT then
     net.Receive("faction_menu", function()
         if not _Fselect then
@@ -17,7 +20,7 @@ if CLIENT then
             
             _Fselect:SetTitle("Faction Roster")
             _Fselect:SetSize(200, 450)
-            _Fselect:SetPos(20, 100)
+            _Fselect:SetPos(580, 100)
             _Fselect:SetDraggable(true)
 	        _Fselect:ShowCloseButton(true)
             _Fselect:MakePopup()
@@ -27,7 +30,7 @@ if CLIENT then
             independent:SetPos(8, 30)
             independent:SetSize(70, 15)
             independent:SetText(" Independent")
-            
+
             local resistance = vgui.Create("DColorButton", _Fselect)
             resistance:SetPos(8, 60)
             resistance:SetSize(70, 15)
@@ -45,6 +48,8 @@ if CLIENT then
             zombie:SetSize(70, 15)
             zombie:SetText(" Zombie")
             zombie:SetColor(Color(0, 0, 0), true) 
+
+
             -- start each r, g, b with random value for DColorButton SetColor method arguments
 --[[
             AUTHOR: Ace Lord
@@ -57,19 +62,16 @@ if CLIENT then
             sw = switches
 --]]
 
-
             local _r = math.random(0, 255)
             local _g = math.random(0, 255)
             local _b = math.random(0, 255)
-
-            independent:SetColor(Color(_r, _g, _b), true) 
 
             local red_sw = false
             local gre_sw = false
             local blu_sw = false
 
             if not timer.Exists("rainbowText") then 
-                timer.Create("rainbowText", 0.1, 0, function() 
+                timer.Create("rainbowText", 0.00001, 0, function() 
                     --print(timer.RepsLeft("rainbowText"))
 
                     --r
@@ -111,38 +113,48 @@ if CLIENT then
                         _b = _b - 1
                     end
 
---[[
+---[[
                     red = tostring(_r)
                     gre = tostring(_g)
                     blu = tostring(_b)
-                    --print("r, g, b: ", red, gre, blu)
-                    chat.AddText("r, g, b: ", red, ", ", gre, ", ", blu)
---]]
-                    
-                    independent:SetColor(Color(_r, _g, _b), true)
-
-                    if _Fselect:SetDeleteOnClose(false) then
-                        timer.Stop("rainbowText")
-                        independent:SetColor(Color(_r, _g, _b), true)
-                    end
+                    --print("indp: r, g, b: ", red, gre, blu)
+                    chat.AddText("indp: r, g, b: ", red, ", ", gre, ", ", blu)
+--]]                
+                    randomizedColor = Color(_r, _g, _b)
+                    independent:SetColor(randomizedColor, true)
                 end)
+            else
+                --timer.Start("rainbowText")
             end 
  
---[[
-            if timer.Exists("rainbowText") then
-                timer.Start("rainbowText")
-                --print(timer.RepsLeft("rainbowText"))
-                local _r = math.random(0, 255)
-                local _g = math.random(0, 255)
-                local _b = math.random(0, 255)
+            function _Fselect:OnClose() 
+                timer.Remove("rainbowText")
+            end
 
-                independent:SetColor(Color(_r, _g, _b), true)
 
-            end            
-]]
-            
+            -- other junk below for actually choosing the faction
+            local rosterSelected = {}
+            rosterSelected.check = false
+
             function independent:DoClick()
+                rosterSelected.check = true
+                chosenIndependent()
                 chat.AddText("Independent faction chosen.")
+            end
+            function resistance:DoClick()
+                rosterSelected.check = true
+                chosenResistance()
+                chat.AddText("Resistance faction chosen.")
+            end
+            function combine:DoClick()
+                rosterSelected.check = true
+                chosenCombine()
+                chat.AddText("Combine faction chosen.")
+            end
+            function zombie:DoClick()
+                rosterSelected.check = true
+                chosenZombies()
+                chat.AddText("Zombie faction chosen.")
             end
         end  
     end)
@@ -154,5 +166,9 @@ end
     < Make sure this menu is persistent for the player, so that when they respawn this menu does not prompt back.
     < This menu shall only prompt when the client presses a certain key; like ',', (Make my own CONVAR command and set this key to be the prompt
 that may let the player to select a team)
+    < make player respawn
+
+
+    << Make a cooldown timer so player cannot select team so fast
 ]]
 

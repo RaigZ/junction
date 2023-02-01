@@ -95,6 +95,11 @@ function GM:PlayerInitialSpawn(ply)
 end
 
 util.AddNetworkString("faction_menu")
+util.AddNetworkString("faction_change")
+
+net.Receive("faction_change", function()
+    print("Message received.\n\n\n\n")
+end)
 
 function GM:ShowSpare2(ply)
     net.Start("faction_menu")

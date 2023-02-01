@@ -65,6 +65,10 @@ if CLIENT then
             local _r = math.random(0, 255)
             local _g = math.random(0, 255)
             local _b = math.random(0, 255)
+            
+            local r_notRand = 0
+            local g_notRand = 0 
+            local b_notRand = 0
 
             local red_sw = false
             local gre_sw = false
@@ -83,8 +87,10 @@ if CLIENT then
                     
                     if red_sw == true then
                         _r = _r - 1
+                        r_notRand = r_notRand - 1
                     else 
                         _r = _r + 1
+                        r_notRand = r_notRand + 1
                     end
 
                     --g
@@ -96,8 +102,10 @@ if CLIENT then
 
                     if gre_sw == true then
                         _g = _g - 1
+                        g_notRand = g_notRand - 1
                     else 
                         _g = _g + 1
+                        g_notRand = g_notRand + 1
                     end
 
                     --b
@@ -109,11 +117,13 @@ if CLIENT then
 
                     if blu_sw == true then
                         _b = _b + 1
+                        b_notRand = b_notRand - 1
                     else
                         _b = _b - 1
+                        b_notRand = b_notRand + 1
                     end
 
----[[
+--[[
                     red = tostring(_r)
                     gre = tostring(_g)
                     blu = tostring(_b)
@@ -121,7 +131,11 @@ if CLIENT then
                     chat.AddText("indp: r, g, b: ", red, ", ", gre, ", ", blu)
 --]]                
                     randomizedColor = Color(_r, _g, _b)
+
                     independent:SetColor(randomizedColor, true)
+                    resistance:SetColor(Color(0, 0, b_notRand), true)
+                    combine:SetColor(Color(r_notRand, 0, 0), true)
+                    zombie:SetColor(Color(0, g_notRand, 0), true)
                 end)
             else
                 --timer.Start("rainbowText")
@@ -131,28 +145,35 @@ if CLIENT then
                 timer.Remove("rainbowText")
             end
 
-
             -- other junk below for actually choosing the faction
-            local rosterSelected = {}
-            rosterSelected.check = false
+            --local rosterSelected = {0, 1, 2, 3}
+            --rosterSelected.val = nil
 
-            function independent:DoClick()
-                rosterSelected.check = true
+            independent.DoClick = function()
+                net.Start("faction_change")
+                net.SendToServer()
+                --rosterSelected.val = 0
                 chosenIndependent()
                 chat.AddText("Independent faction chosen.")
             end
-            function resistance:DoClick()
-                rosterSelected.check = true
+            resistance.DoClick = function()
+                net.Start("faction_change")
+                net.SendToServer()
+                --rosterSelected.val = 1
                 chosenResistance()
                 chat.AddText("Resistance faction chosen.")
             end
-            function combine:DoClick()
-                rosterSelected.check = true
+            combine.DoClick = function()
+                net.Start("faction_change")
+                net.SendToServer()
+                --rosterSelected.val = 2
                 chosenCombine()
                 chat.AddText("Combine faction chosen.")
             end
-            function zombie:DoClick()
-                rosterSelected.check = true
+            zombie.DoClick = function() 
+                net.Start("faction_change")
+                net.SendToServer()
+                --rosterSelected.val = 3
                 chosenZombies()
                 chat.AddText("Zombie faction chosen.")
             end

@@ -11,8 +11,6 @@
 --print("cl_faction_selection.lua")
 
 
-include("tourist/gamemode/faction_setup.lua")
-
 if CLIENT then
     net.Receive("faction_menu", function()
         if not _Fselect then
@@ -130,7 +128,7 @@ if CLIENT then
                     --print("indp: r, g, b: ", red, gre, blu)
                     chat.AddText("indp: r, g, b: ", red, ", ", gre, ", ", blu)
 --]]                
-                    randomizedColor = Color(_r, _g, _b)
+                    local randomizedColor = Color(_r, _g, _b)
 
                     independent:SetColor(randomizedColor, true)
                     resistance:SetColor(Color(0, 0, b_notRand), true)
@@ -146,35 +144,29 @@ if CLIENT then
             end
 
             -- other junk below for actually choosing the faction
-            --local rosterSelected = {0, 1, 2, 3}
-            --rosterSelected.val = nil
 
             independent.DoClick = function()
                 net.Start("faction_change")
+                net.WriteInt(0, 4)
                 net.SendToServer()
-                --rosterSelected.val = 0
-                chosenIndependent()
                 chat.AddText("Independent faction chosen.")
             end
             resistance.DoClick = function()
                 net.Start("faction_change")
+                net.WriteInt(1, 4)
                 net.SendToServer()
-                --rosterSelected.val = 1
-                chosenResistance()
                 chat.AddText("Resistance faction chosen.")
             end
             combine.DoClick = function()
                 net.Start("faction_change")
+                net.WriteInt(2, 4)
                 net.SendToServer()
-                --rosterSelected.val = 2
-                chosenCombine()
                 chat.AddText("Combine faction chosen.")
             end
             zombie.DoClick = function() 
                 net.Start("faction_change")
+                net.WriteInt(3, 4)
                 net.SendToServer()
-                --rosterSelected.val = 3
-                chosenZombies()
                 chat.AddText("Zombie faction chosen.")
             end
         end  

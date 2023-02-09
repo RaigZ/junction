@@ -32,14 +32,19 @@ function getFactionName(ply)
     end
 end
 
+_spectatorDesignator = true
+
 function GM:PlayerSpawn(ply)
-    if ply:IsConnected() then
+    if ply:IsConnected() and _spectatorDesignator == true then
+        print("_spectatorDesignator: ", _spectatorDesignator)
         --ply:ChatPrint(ply:SendTimeConnect())
+        print("Choose a faction to exit Spectator.")
         GAMEMODE:PlayerSpawnAsSpectator(ply)
     end
-
+    
     local indx, _ = getFactionName(ply)
     
+--[[
     if indx ~= "Spectator" then
         function self:AllowPlayerPickup(ply)
             return true
@@ -49,14 +54,19 @@ function GM:PlayerSpawn(ply)
             return false
         end
     end
+--]]
 
     if indx == 0 then
+        ply:Spectate(OBS_MODE_NONE)
         chosenIndependent()
     elseif indx == 1 then
+        ply:Spectate(OBS_MODE_NONE)
         chosenResistance()
     elseif indx == 2 then
+        ply:Spectate(OBS_MODE_NONE)
         chosenCombine()
     elseif indx == 3 then
+        ply:Spectate(OBS_MODE_NONE)
         chosenZombies()
     elseif indx == "Spectator" then
         -- MAKE IT WHERE THE SPECTATOR CANNOT CONTROL WORLD ENTITIES
@@ -68,7 +78,7 @@ function GM:PlayerSpawn(ply)
     ply:SetRunSpeed(380)
     ply:SetWalkSpeed(260)
     --ply:Give("weapon_physcannon")
-    ply:SetupHands()
+    --ply:SetupHands()
 end 
 
 function GM:PlayerConnect(name, ip)
@@ -85,11 +95,9 @@ function GM:PreGamemodeLoaded()
 end
 
 function GM:PlayerInitialSpawn(ply)
-    if ply:IsConnected() == true then
-        print("Initial spawn.")
-    else
-    --[[if player selected a team, they shall spawn into the world]]
-        ply:setupTeam(math.random(0, 3))
+    if ply:IsConnected() then
+        --print("Initial spawn.")
+        --ply:setupTeam(math.random(0, 3))
         ply:ChatPrint(ply:IPAddress() .. ": " .. ply:Name() .. " connected.")
     end
 end
@@ -97,9 +105,21 @@ end
 util.AddNetworkString("faction_menu")
 util.AddNetworkString("faction_change")
 
-net.Receive("faction_change", function()
-    print("Message received.\n\n\n\n")
+net.Receive("faction_change", function(len, ply)
+    local change_indx = net.ReadInt(4)
+    _spectatorDesignator = false
+    print("_spectatorDesignator: ", _spectatorDesignator)
+    ply:SetTeam(change_indx)
+    ply:Spawn()
+    --print("Message received.\n\n\n\n")
 end)
+
+function GM:PlayerUse(ply, ent)
+    if _spectatorDesignator == true then
+        return false    
+    end
+    return
+end
 
 function GM:ShowSpare2(ply)
     net.Start("faction_menu")

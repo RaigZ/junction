@@ -15,11 +15,11 @@ local ply = FindMetaTable("Player")
 
 local teams = {}
 
--- Indepedent: Nobody is your friend, even those with the label "Independent" kill eachother
+-- Indepedent: Teams are for chumps. Solo is where it's at.
 teams[0] = {
     name = "Independent",
     frags = 0,
-    special_unit = {}, -- the_GMan
+    special_unit = {"the_GMan", "the_Dude"}, -- the_GMan
     color = Vector(1.0, 1.0, 1.0),
     --weapons = {} 
 }
@@ -28,7 +28,7 @@ teams[0] = {
 teams[1] = {
     name = "Resistance",
     frags = 0,
-    special_unit = {}, -- Gordon, Barney, Alyx, Eli
+    special_unit = {"gordon", "barney", "alyx", "eli"}, -- Gordon, Barney, Alyx, Eli
     color = Vector(0, 0, 1.0),
     --weapons = {} 
 }
@@ -37,7 +37,7 @@ teams[1] = {
 teams[2] = {
     name = "Combine",
     frags = 0,
-    special_unit = {}, -- Breen 
+    special_unit = {"breen"}, -- Breen 
     color = Vector(1.0, 0, 0),
     --weapons = {} 
 }
@@ -46,7 +46,7 @@ teams[2] = {
 teams[3] = {
     name = "Zombies",
     frags = 0,
-    special_unit = {}, -- Poison Zombie!?
+    special_unit = {"p_zomb", "zombine"}, -- Poison Zombie!? Zombine!!!???
     color = Vector(1.0, 0, 0),
     --weapons = {} 
 }

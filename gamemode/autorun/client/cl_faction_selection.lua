@@ -47,7 +47,21 @@ if CLIENT then
             zombie:SetText(" Zombie")
             zombie:SetColor(Color(0, 0, 0), true) 
 
+            local icon = vgui.Create("DModelPanel", _Fselect)
+            icon:SetSize(100, 100)
+            icon:SetPos(100, 30)
+            icon:SetModel(LocalPlayer():GetModel())
+            icon:SetFOV(50)
+            icon:SetCamPos(icon:GetCamPos() / 2 + Vector(50, 50, 40))
 
+            xRotate = 0
+            function icon:LayoutEntity(ent)
+                xRotate = xRotate + 4
+                --print(xRotate)
+                if xRotate == 4096 then xRotate = 0 end
+                ent:SetAngles(Angle(0, xRotate, 0)) 
+            end
+            function icon:EntityGetPlayerColor() return Vector(1, 1, 0) end
             -- start each r, g, b with random value for DColorButton SetColor method arguments
 --[[
             AUTHOR: Ace Lord
@@ -175,13 +189,12 @@ end
 
 --[[
     ::Tasks::
-    < Create GUI menu selection for player to decide which team they want to choose.
-    < Make sure this menu is persistent for the player, so that when they respawn this menu does not prompt back.
-    < This menu shall only prompt when the client presses a certain key; like ',', (Make my own CONVAR command and set this key to be the prompt
+   ✓ < Create GUI menu selection for player to decide which team they want to choose.
+   ✓ < Make sure this menu is persistent for the player, so that when they respawn this menu does not prompt back.
+   - < This menu shall only prompt when the client presses a certain key; like ',', (Make my own CONVAR command and set this key to be the prompt
 that may let the player to select a team)
-    < make player respawn
-
-
-    << Make a cooldown timer so player cannot select team so fast
+   ✓ < make player respawn
+   - << Make a cooldown timer so player cannot select team so fast
+   - << Close mechanism, that if the faction roster is open AND the user presses f4, let the faction roster close
 ]]
 

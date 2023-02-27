@@ -18,7 +18,7 @@ local teams = {}
 -- Indepedent: Teams are for chumps. Solo is where it's at.
 teams[0] = {
     name = "Independent",
-    frags = 0,
+    totalfrags = 0,
     special_unit = {"the_GMan", "the_Dude"}, -- the_GMan
     color = Vector(1.0, 1.0, 1.0),
     --weapons = {} 
@@ -27,7 +27,7 @@ teams[0] = {
 --Resistance...
 teams[1] = {
     name = "Resistance",
-    frags = 0,
+    totalfrags = 0,
     special_unit = {"gordon", "barney", "alyx", "eli"}, -- Gordon, Barney, Alyx, Eli
     color = Vector(0, 0, 1.0),
     --weapons = {} 
@@ -36,7 +36,7 @@ teams[1] = {
 --Combine...
 teams[2] = {
     name = "Combine",
-    frags = 0,
+    totalfrags = 0,
     special_unit = {"breen"}, -- Breen 
     color = Vector(1.0, 0, 0),
     --weapons = {} 
@@ -45,7 +45,7 @@ teams[2] = {
 --Zombies... 
 teams[3] = {
     name = "Zombies",
-    frags = 0,
+    totalfrags = 0,
     special_unit = {"p_zomb", "zombine"}, -- Poison Zombie!? Zombine!!!???
     color = Vector(1.0, 0, 0),
     --weapons = {} 
@@ -66,7 +66,9 @@ teams[3] = {
 --]]
 ---------------------------------------------------------
 
-function chosenIndependent() 
+-- make faction setup PLAYER SPECIFIC (refer to the invoking player)
+
+function ply:chosenIndependent() 
     randomIndependentUnitArg = {
         "refugee_m",
         "refugee_f",
@@ -74,11 +76,11 @@ function chosenIndependent()
         "citizen_f"
     }
     local randomUnit = randomIndependentUnitArg[math.random(1, 4)]
-    RunConsoleCommand("pk_pill_apply", randomUnit)
+    self:ConCommand("pk_pill_apply" .. " " .. randomUnit)
     return randomUnit
 end
 
-function chosenResistance() 
+function ply:chosenResistance() 
     randomResistanceUnitArg = {
         "rebel_m",
         "medic_m",
@@ -86,22 +88,22 @@ function chosenResistance()
         "medic_f"
     }
     local randomUnit = randomResistanceUnitArg[math.random(1, 4)]
-    RunConsoleCommand("pk_pill_apply", randomUnit)
+    self:ConCommand("pk_pill_apply" .. " " .. randomUnit)
     return randomUnit
 end
 
-function chosenCombine()
+function ply:chosenCombine()
     randomCombineUnitArg = {
         "csoldier", 
         "csoldier_shotgunner", 
         "csoldier_elite"
     }  
     local randomUnit = randomCombineUnitArg[math.random(1, 3)]
-    RunConsoleCommand("pk_pill_apply", randomUnit)
+    self:ConCommand("pk_pill_apply" .. " " .. randomUnit)
     return randomUnit
 end
 
-function chosenZombies() 
+function ply:chosenZombies() 
     randomZombieUnitArg = {
         "zombie_fast",
         "headcrab_fast",
@@ -109,7 +111,7 @@ function chosenZombies()
         "zombie"
     }
     local randomUnit = randomZombieUnitArg[math.random(1, 4)]
-    RunConsoleCommand("pk_pill_apply", randomUnit)
+    self:ConCommand("pk_pill_apply " .. " " .. randomUnit)
     return randomUnit
 end
 
@@ -124,11 +126,13 @@ end
 --]]
 ---------------------------------------------------------
 
+--[[
+
 function ply:setupTeam(teamValue)
     if (not teams[teamValue]) then 
         return 
     else
-        self:SetTeam(teamValue)
+        --self:SetTeam(teamValue)
         self:SetPlayerColor(teams[teamValue].color)
         
         if(teams[teamValue].name == "Independent") then
@@ -150,3 +154,5 @@ function ply:setupTeam(teamValue)
         end
     end
 end
+
+--]]

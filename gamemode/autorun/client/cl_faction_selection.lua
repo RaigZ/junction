@@ -1,15 +1,11 @@
---[[
+--[[----------------------------------------------------------------------------
     cl_faction_selection.lua
 
-    Gamemode: Tourist
-    Author: Ace Lord 
     Steam ID: 76561198129715226
     January 21, 2023
-
---]]
+--]]----------------------------------------------------------------------------
 
 --print("cl_faction_selection.lua")
-
 
 if CLIENT then
     net.Receive("faction_menu", function()
@@ -63,16 +59,14 @@ if CLIENT then
             end
             function icon:EntityGetPlayerColor() return Vector(1, 1, 0) end
             -- start each r, g, b with random value for DColorButton SetColor method arguments
---[[
-            AUTHOR: Ace Lord
-            Steam ID: 76561198129715226
+--[[----------------------------------------------------------------------------
             1/29/2023
 
             DESCRIPTION: Transition colors of GUI buttons for
             DFrame _Fselect (faction roster)
 
             sw = switches
---]]
+--]]----------------------------------------------------------------------------
 
             local _r = math.random(0, 255)
             local _g = math.random(0, 255)
@@ -164,30 +158,34 @@ if CLIENT then
                 net.WriteInt(0, 4)
                 net.SendToServer()
                 chat.AddText("Independent faction chosen.")
+                _Fselect:Close()
             end
             resistance.DoClick = function()
                 net.Start("faction_change")
                 net.WriteInt(1, 4)
                 net.SendToServer()
                 chat.AddText("Resistance faction chosen.")
+                _Fselect:Close()
             end
             combine.DoClick = function()
                 net.Start("faction_change")
                 net.WriteInt(2, 4)
                 net.SendToServer()
                 chat.AddText("Combine faction chosen.")
+                _Fselect:Close()
             end
             zombie.DoClick = function() 
                 net.Start("faction_change")
                 net.WriteInt(3, 4)
                 net.SendToServer()
                 chat.AddText("Zombie faction chosen.")
+                _Fselect:Close()
             end
         end  
     end)
 end
 
---[[
+--[[----------------------------------------------------------------------------
     ::Tasks::
    ✓ < Create GUI menu selection for player to decide which team they want to choose.
    ✓ < Make sure this menu is persistent for the player, so that when they respawn this menu does not prompt back.
@@ -196,5 +194,5 @@ that may let the player to select a team)
    ✓ < make player respawn
    - << Make a cooldown timer so player cannot select team so fast
    - << Close mechanism, that if the faction roster is open AND the user presses f4, let the faction roster close
-]]
+]]----------------------------------------------------------------------------
 

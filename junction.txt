@@ -1,7 +1,7 @@
-"tourist"
+"junction"
 {
 	"base"		"base"
-	"title"		"Tourist"
+	"title"		"Junction"
 	"maps"		"^gm_"
 	"category"	"other"
 	"menusystem"	"1"

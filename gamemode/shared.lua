@@ -1,6 +1,6 @@
-GM.Name = " tourist"
-GM.Author = "Ace Lord"
-GM.Email = "N/A"
+GM.Name = " HLBF"
+GM.Author = "RaigZ"
+GM.Email = "ragirzebari123@gmail.com"
 GM.Website = "N/A"
 
 function GM:CreateTeams()

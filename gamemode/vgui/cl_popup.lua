@@ -1,3 +1,10 @@
+--[[----------------------------------------------------------------------------
+    cl_popup.lua 
+    
+    Steam ID: 76561198129715226
+    January 7, 2023
+--]]----------------------------------------------------------------------------
+
 if CLIENT then
     hook.Add("KeyPress", "key_esc", function(ply, key)
         if _GMain:SetDeleteOnClose() then
@@ -37,7 +44,7 @@ if CLIENT then
     txt:SetPos(10, 80)
     txt:SetFont("HudHintTextLarge")
     txt:SetColor(Color(255, 243, 34))
-    txt:SetText("CREATOR: RaigZ\nWelcome to Tourist.\nIm not good with version \nsemantics; \n\nVERSION: ALPHA_0.6.1")
+    txt:SetText("CREATOR: RaigZ\nWelcome to Junction.\nIm not good with version \nsemantics; \n\nVERSION: ALPHA_0.6.1")
     txt:SetHeight(200)
     txt:SetWidth(200)
 end

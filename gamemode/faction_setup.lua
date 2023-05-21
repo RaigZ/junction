@@ -1,15 +1,12 @@
---[[
-    
-    ADDONS USED AND CREDITS: 
-        PARAKEET'S PILL PACK ADDON -->  https://steamcommunity.com/sharedfiles/filedetails/?id=950845673
+--[[----------------------------------------------------------------------------    
+    faction_setup.lua
 
-
-    Gamemode: Tourist
-    Author: Ace Lord 
-    STEAM_ID:76561198129715226
+    STEAM_ID: 76561198129715226
     January 7, 2023
 
---]]
+    ADDONS USED AND CREDITS: 
+        PARAKEET'S PILL PACK ADDON -->  https://steamcommunity.com/sharedfiles/filedetails/?id=950845673
+--]]----------------------------------------------------------------------------
 
 local ply = FindMetaTable("Player")
 

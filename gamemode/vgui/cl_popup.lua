@@ -26,18 +26,18 @@ if CLIENT then
 
     -- Frame		
     _GMain = vgui.Create("DFrame")
-    _GMain:SetTitle("Tourist")
+    _GMain:SetTitle("Junction")
     _GMain:SetSize(250, 250)
     _GMain:Center(true)
     _GMain:SetDraggable(false)
 	_GMain:ShowCloseButton(false)
 
     -- logo
-    local tourist = vgui.Create("DImage", _GMain)
+    local junction = vgui.Create("DImage", _GMain)
 
-    tourist:SetPos(10, 30)
-    tourist:SetSize(96, 96)
-    tourist:SetImage("materials/tourist.png")
+    junction:SetPos(10, 30)
+    junction:SetSize(96, 96)
+    junction:SetImage("materials/junction.png")
 
     -- text
     local txt = vgui.Create("DLabel", _GMain)

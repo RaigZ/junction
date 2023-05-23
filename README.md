@@ -1,7 +1,7 @@
 # Junction
 
 <p align="center">
-  <img width="192" height="192" src="content/materials/tourist.png">
+  <img width="192" height="192" src="content/materials/junction.png">
 </p>
 
 ## Overview

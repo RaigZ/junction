@@ -33,7 +33,7 @@ function ply:EnumerationLoad()
         self:SetPData("Killstreak", 0) -- Writes player data into SQL database
         self:SetNWInt("Killstreak", 0) -- Sets network integer to 0 
     else
-        self:SetNWInt("Killstreak", self:GetPData("Killstreak")) -- Keep the selected GetPData on the labeled Killstreak key      
+        self:SetNWInt("Killstreak", 0) -- Keep the selected GetPData on the labeled Killstreak key      
     end
     --[[
     if self:GetPData("XP") == nil then

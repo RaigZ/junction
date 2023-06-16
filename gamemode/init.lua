@@ -1,7 +1,6 @@
 --[[----------------------------------------------------------------------------
     init.lua
 
-    STEAM_ID: 76561198129715226
     January 7, 2023
 --]]---------------------------------------------------------------------------- 
 
@@ -66,21 +65,23 @@ end
             performs the getFactionName function to help view the key and value
             of the faction
 --]]----------------------------------------------------------------------------
-local _spectatorDesignator = true
 
 function GM:PlayerSpawn(ply)
-    if ply:IsConnected() and _spectatorDesignator == true then
-        ply:PrintMessage(HUD_PRINTCONSOLE, "_spectatorDesignator: " .. tostring(_spectatorDesignator))
-        -- ply:ChatPrint(ply:SendTimeConnect())
-        ply:PrintMessage(HUD_PRINTCONSOLE, "Choose a faction to exit Spectator.")
-        GAMEMODE:PlayerSpawnAsSpectator(ply)
-        hook.Add("PlayerNoClip", "SpectateNoClip", function(ply, desiredState)
-            return false
-        end)
+    if (ply._spectatorDesignator == false) then
+    else
+        ply._spectatorDesignator = true
+        if ply:IsConnected() and ply._spectatorDesignator == true then
+            ply:PrintMessage(HUD_PRINTCONSOLE, "_spectatorDesignator: " .. tostring(ply._spectatorDesignator))
+            -- ply:ChatPrint(ply:SendTimeConnect())
+            ply:PrintMessage(HUD_PRINTCONSOLE, "Choose a faction to exit Spectator.")
+            GAMEMODE:PlayerSpawnAsSpectator(ply)
+            hook.Add("PlayerNoClip", "SpectateNoClip", function(ply, desiredState)
+                return false
+            end)
+        end 
     end
-
     local indx, _ = getFactionName(ply)
-
+    
     --[[
     if indx ~= "Spectator" then
         function self:AllowPlayerPickup(ply)
@@ -92,31 +93,32 @@ function GM:PlayerSpawn(ply)
         end
     end
 --]]
-
+    --[[ 
+        PROBLEM: 
+        Anytime a player spawns, the indx is not bound to 1 player, it is bound to all players    
+    ]]
+    
     if type(indx) == "number" then
         local model = nil
         ply:Spectate(OBS_MODE_NONE)
         hook.Add("CanPlayerSuicide", "DisallowSpectatorSuicide", function(ply)
             return true
         end)
+
         if indx == 0 then
             model = ply:chosenIndependent()
-            ply:PrintMessage(HUD_PRINTCONSOLE, "Model: " .. model)
             ply:SetModel("models/player/postal2_dude.mdl")
         elseif indx == 1 then
             model = ply:chosenResistance()
-            ply:PrintMessage(HUD_PRINTCONSOLE, "Model: " .. model)
             ply:SetModel("models/player/Group03/male_01.mdl")
         elseif indx == 2 then
             model = ply:chosenCombine()
-            ply:PrintMessage(HUD_PRINTCONSOLE, "Model: " .. model)
             ply:SetModel("models/player/combine_super_soldier.mdl")
         elseif indx == 3 then
             model = ply:chosenZombies()
-            ply:PrintMessage(HUD_PRINTCONSOLE, "Model: " .. model)
             ply:SetModel("models/player/zombie_classic.mdl")
         end
-
+        ply:PrintMessage(HUD_PRINTCONSOLE, "Model: " .. model)
     elseif indx == "Spectator" then
         hook.Add("CanPlayerSuicide", "DisallowSpectatorSuicide", function(ply)
             return false
@@ -124,6 +126,15 @@ function GM:PlayerSpawn(ply)
         ply:SetModel("models/player/skeleton.mdl")
     end
 
+    ---[[
+    playerTeamCount = 0
+    for k, v in ipairs(team.GetPlayers(indx)) do
+        playerTeamCount = playerTeamCount + 1
+    end
+    print("Current players in " .. team.GetName(ply:Team()) .. ": " .. playerTeamCount)
+    ---]]
+
+    --PrintTable(team.GetPlayers(indx))
     ply:PrintMessage(HUD_PRINTCONSOLE, "getFactionName(ply): " .. getFactionName(ply))
     ply:PrintMessage(HUD_PRINTTALK, "You spawn as part of the " .. team.GetName(ply:Team()) .. " faction.")
 
@@ -134,12 +145,13 @@ function GM:PlayerSpawn(ply)
 end
 
 function GM:PlayerConnect(name, ip)
-    print("Welcome to hlbf " .. name .. "!\n")
+    print("Welcome to junction " .. name .. "!\n")
 end
 
 
 function GM:PlayerDisconnected(ply)
-    ply:EnumerationSave()
+    ply:SetPData("Killstreak", 0)
+    --ply:EnumerationSave()
     --GAMEMODE:PlayerSpawnAsSpectator(ply)
 end
 
@@ -149,7 +161,13 @@ end
             "Killstreak" key to default 0 for the victim
 --]]----------------------------------------------------------------------------
 hook.Add("PlayerDeath", "KillstreakAdder", function(victim, inflictor, attacker)
+    if (victim == attacker) then
+        victim:SetPData("Killstreak", 0) 
+    elseif (victim != attacker) then
+        attacker:SetPData("Killstreak", attacker:GetPData("Killstreak") + 1) 
+    end
     print(victim:GetName() .. "'s killstreak: ", victim:GetPData("Killstreak"))
+    print(attacker:GetName() .. "'s killstreak: ", attacker:GetPData("Killstreak"))
 end)
 
 util.AddNetworkString("faction_menu")
@@ -157,8 +175,8 @@ util.AddNetworkString("faction_change")
 
 net.Receive("faction_change", function(len, ply)
     local change_indx = net.ReadInt(4)
-    _spectatorDesignator = false
-    ply:PrintMessage(HUD_PRINTTALK, "_spectatorDesignator: " .. tostring(_spectatorDesignator))
+    ply._spectatorDesignator = false
+    ply:PrintMessage(HUD_PRINTTALK, "_spectatorDesignator: " .. tostring(ply._spectatorDesignator))
     ply:SetTeam(change_indx)
     ply:Spawn()
     -- print("Message received.\n\n\n\n")
@@ -171,7 +189,7 @@ end)
             non-spectator, they shall interact with the world.
 --]]----------------------------------------------------------------------------
 function GM:PlayerUse(ply, ent)
-    if _spectatorDesignator == true then
+    if ply._spectatorDesignator == true then
         return false
     end
     return true

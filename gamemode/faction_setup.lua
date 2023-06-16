@@ -1,7 +1,6 @@
 --[[----------------------------------------------------------------------------    
     faction_setup.lua
 
-    STEAM_ID: 76561198129715226
     January 7, 2023
 
     ADDONS USED AND CREDITS: 
@@ -50,8 +49,6 @@ teams[3] = {
 
 ---------------------------------------------------------
 --[[
-    AUTHOR: Ace_Lord
-    STEAM_ID:76561198129715226
     DATE: January 7, 2023
 
     DESCRIPTION: Chooses specific factions with specific 
@@ -74,6 +71,7 @@ function ply:chosenIndependent()
     }
     local randomUnit = randomIndependentUnitArg[math.random(1, 4)]
     self:ConCommand("pk_pill_apply" .. " " .. randomUnit)
+    self:SetPData("Killstreak", 0)
     return randomUnit
 end
 
@@ -86,6 +84,7 @@ function ply:chosenResistance()
     }
     local randomUnit = randomResistanceUnitArg[math.random(1, 4)]
     self:ConCommand("pk_pill_apply" .. " " .. randomUnit)
+    self:SetPData("Killstreak", 0)
     return randomUnit
 end
 
@@ -97,6 +96,7 @@ function ply:chosenCombine()
     }  
     local randomUnit = randomCombineUnitArg[math.random(1, 3)]
     self:ConCommand("pk_pill_apply" .. " " .. randomUnit)
+    self:SetPData("Killstreak", 0)
     return randomUnit
 end
 
@@ -109,6 +109,7 @@ function ply:chosenZombies()
     }
     local randomUnit = randomZombieUnitArg[math.random(1, 4)]
     self:ConCommand("pk_pill_apply " .. " " .. randomUnit)
+    self:SetPData("Killstreak", 0)
     return randomUnit
 end
 

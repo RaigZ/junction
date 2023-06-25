@@ -11,9 +11,9 @@ local ply = FindMetaTable("Player")
 
 local teams = {}
 
--- Indepedent: Teams are for chumps. Solo is where it's at.
+-- Xen
 teams[0] = {
-    name = "Independent",
+    name = "Xen",
     totalfrags = 0,
     special_unit = {"the_GMan", "the_Dude"}, -- the_GMan
     color = Vector(1.0, 1.0, 1.0),
@@ -62,14 +62,14 @@ teams[3] = {
 
 -- make faction setup PLAYER SPECIFIC (refer to the invoking player)
 
-function ply:chosenIndependent() 
-    randomIndependentUnitArg = {
-        "refugee_m",
-        "refugee_f",
-        "citizen_m",
-        "citizen_f"
+function ply:chosenXen() 
+    randomXenUnitArg = {
+        "hl1agrunt",
+        "hl1bullsquid",
+        "hl1vort",
+        "hl1houndeye"
     }
-    local randomUnit = randomIndependentUnitArg[math.random(1, 4)]
+    local randomUnit = randomXenUnitArg[math.random(1, 4)]
     self:ConCommand("pk_pill_apply" .. " " .. randomUnit)
     self:SetPData("Killstreak", 0)
     return randomUnit
@@ -133,9 +133,9 @@ function ply:setupTeam(teamValue)
         --self:SetTeam(teamValue)
         self:SetPlayerColor(teams[teamValue].color)
         
-        if(teams[teamValue].name == "Independent") then
-            --print("Independent")
-            indep_model = chosenIndependent()
+        if(teams[teamValue].name == "Xen") then
+            --print("Xen")
+            indep_model = chosenXen()
             print("MODEL: ", indep_model)
         elseif(teams[teamValue].name == "Resistance") then
             --print("Resistance")

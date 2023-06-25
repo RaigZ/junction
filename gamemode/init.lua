@@ -14,11 +14,18 @@ AddCSLuaFile("autorun/server/playerAttributes.lua")
 
 include("shared.lua")
 include("faction_setup.lua")
-include("autorun/client/cl_faction_selection.lua")
-include("vgui/cl_popup.lua")
+
+-- sv
 include("autorun/server/sv_popup.lua")
 include("autorun/server/playerAttributes.lua")
+include("autorun/server/sv_junk_blacklist.lua")
+include("autorun/server/sv_creatormode.lua")
 
+-- cl
+include("autorun/client/cl_faction_selection.lua")
+include("vgui/cl_popup.lua")
+include("autorun/client/cl_junk_blacklist.lua")
+include("autorun/client/cl_creatormode.lua")
 --[[----------------------------------------------------------------------------
             DESCRIPTION: None
 
@@ -35,7 +42,7 @@ end
 function GM:PlayerInitialSpawn(ply)
     ply:EnumerationLoad()
     ply:SetNWInt("Killstreak", ply:GetNWInt("Killstreak"))
-    print(ply:Nick() .. "'s killstreak is " .. ply:GetNWInt("Killstreak"))
+    --print(ply:Nick() .. "'s killstreak is " .. ply:GetNWInt("Killstreak"))
     --[[
     if ply:IsConnected() then
         -- print("Initial spawn.")
@@ -50,7 +57,7 @@ end
             only difference is taking the team index 
 --]]----------------------------------------------------------------------------
 function getFactionName(ply)
-    for k, v in pairs({"Independent", "Resistance", "Combine", "Zombies"}) do
+    for k, v in pairs({"Xen", "Resistance", "Combine", "Zombies"}) do
         if v == team.GetName(ply:Team()) then
             return (k - 1), v
         end
@@ -106,7 +113,7 @@ function GM:PlayerSpawn(ply)
         end)
 
         if indx == 0 then
-            model = ply:chosenIndependent()
+            model = ply:chosenXen()
             ply:SetModel("models/player/postal2_dude.mdl")
         elseif indx == 1 then
             model = ply:chosenResistance()
@@ -119,7 +126,7 @@ function GM:PlayerSpawn(ply)
             ply:SetModel("models/player/zombie_classic.mdl")
         end
         ply:PrintMessage(HUD_PRINTCONSOLE, "Model: " .. model)
-    elseif indx == "Spectator" then
+    elseif ply._spectatorDesignator == true then
         hook.Add("CanPlayerSuicide", "DisallowSpectatorSuicide", function(ply)
             return false
         end)

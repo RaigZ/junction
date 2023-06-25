@@ -1,7 +1,6 @@
 --[[----------------------------------------------------------------------------
     cl_faction_selection.lua
 
-    Steam ID: 76561198129715226
     January 21, 2023
 --]]----------------------------------------------------------------------------
 
@@ -20,10 +19,10 @@ if CLIENT then
             _Fselect:MakePopup()
 
             --faction associated buttons
-            local independent = vgui.Create("DColorButton", _Fselect)
-            independent:SetPos(8, 30)
-            independent:SetSize(70, 15)
-            independent:SetText(" Independent")
+            local Xen = vgui.Create("DColorButton", _Fselect)
+            Xen:SetPos(8, 30)
+            Xen:SetSize(70, 15)
+            Xen:SetText(" Xen")
 
             local resistance = vgui.Create("DColorButton", _Fselect)
             resistance:SetPos(8, 60)
@@ -54,8 +53,8 @@ if CLIENT then
             function icon:LayoutEntity(ent)
                 xRotate = xRotate + 4
                 --print(xRotate)
-                if xRotate == 4096 then xRotate = 0 end
-                ent:SetAngles(Angle(0, xRotate, 0)) 
+                if xRotate == 8192 then xRotate = 0 end
+                ent:SetAngles(Angle(0, xRotate/2, 0)) 
             end
             function icon:EntityGetPlayerColor() return Vector(1, 1, 0) end
             -- start each r, g, b with random value for DColorButton SetColor method arguments
@@ -138,7 +137,7 @@ if CLIENT then
 --]]                
                     local randomizedColor = Color(_r, _g, _b)
 
-                    independent:SetColor(randomizedColor, true)
+                    Xen:SetColor(randomizedColor, true)
                     resistance:SetColor(Color(0, 0, b_notRand), true)
                     combine:SetColor(Color(r_notRand, 0, 0), true)
                     zombie:SetColor(Color(0, g_notRand, 0), true)
@@ -153,11 +152,11 @@ if CLIENT then
 
             -- other junk below for actually choosing the faction
 
-            independent.DoClick = function()
+            Xen.DoClick = function()
                 net.Start("faction_change")
                 net.WriteInt(0, 4)
                 net.SendToServer()
-                chat.AddText("Independent faction chosen.")
+                chat.AddText("Xen faction chosen.")
                 _Fselect:Close()
             end
             resistance.DoClick = function()
